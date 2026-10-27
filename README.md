@@ -1,35 +1,25 @@
-# Evans Jep
+# Evans Jep — copy-deck implementation
 
-Personal founder website: work, ideas and current focus. Source of truth: `ejepsystems/evansjep`.
+Existing project: ejepsystems/evansjep. Dependency-free Node static generator.
 
-## Develop
+## Work locally
 
-Node.js 20 or newer. No external dependencies.
+Run npm run build and npm test from this directory. Output: dist/. The generated site has 20 HTML pages, with clean routes on Vercel. No editorial directory is copied to the output.
 
-```sh
-npm run build
-npm test
-python3 -m http.server 3000 --directory dist
-```
+## Source
 
-Local Python preview serves `/about.html`; Vercel clean URLs serve `/about`.
+- src/content.mjs: public-facing content selected from the supplied copy deck and previously confirmed venture descriptions/contact accounts.
+- scripts/build.mjs: shared shell, pages and explicit asset allowlist.
+- src/styles.css: consolidated mobile-first neutral editorial design, light/dark appearance.
+- src/site.js: navigation disclosure, keyboard handling, focus loop and appearance.
+- scripts/check.mjs: route, asset, fragment and content boundary verification.
+- scripts/check-navigation.cjs: interaction tests against a DOM model, not a rendered browser.
+- editorial/: local private copy deck, review record and legacy drafts. Never push this directory to the public repository or include it in website deployment.
 
-## Structure
+## Release boundary
 
-- `src/content.mjs`: editable profile, venture directory and editorial drafts.
-- `src/styles.css`: responsive editorial design.
-- `src/site.js`: accessible mobile navigation.
-- `scripts/build.mjs`: generates 11 static pages to `dist/`.
-- `scripts/check.mjs`: validates page structure and all internal links.
-- `docs/ARCHITECTURE.md`: identity and publishing rules.
-- `vercel.json`: static build, clean URLs and preview indexing protection.
+Use the existing review/evans-jep-final-identity branch and preserve unrelated work. Current conversation authorizes production updates; do not merge to main or weaken Vercel Authentication. Keep noindex settings. Only explicitly selected public source/assets belong in GitHub commits; editorial/, private archives and credentials remain local and excluded from generated output.
 
-## Deployment
+## Validation
 
-Use the existing Vercel project `evansjep` under team `team_BbJOXxnXhbaXCfAZo3FzL27X`. Framework: Other / null; build: `npm run build`; output: `dist`; root: repository root. Keep Vercel Authentication enabled. Production release is authorized. Deploy the verified main commit with target production; retain existing Vercel Authentication protection.
-
-The first edition is a review foundation. Writing is clearly labelled editorial draft. Biography, portrait, direct contact details, personal titles and precise venture stages require approved information. No fictional achievements, testimonials or media appearances.
-
-## Current presentation
-
-Times-style native serif throughout. Compact two-column mobile menu, 64px header, no decorative numbering, abbreviated editorial homepage. See docs/IDENTITY.md for current authority.
+See editorial/VALIDATION.md and editorial/CONTENT_REVIEW.md in the private review package. Record actual viewport coverage; do not describe HTTP or DOM-model tests as rendered browser certification.
