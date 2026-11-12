@@ -36,3 +36,16 @@ for(const term of ['Independent technology company','Technology built around rea
 for(const file of htmlFiles){const html=await readFile(file,'utf8');for(const retired of ['Jeclazon','jeclazon','Quincestone','quincestone','Emperor Armani','emperor-armani','EJEP Systems'])assert(!html.includes(retired),'Retired showcase leaked: '+file+' '+retired);}
 for(const file of all)assert(!/quincestone|emperor-armani|jeclazon/.test(file),'Retired public asset: '+file);
 assert(!company.includes('href="undefined"'));
+
+// Build 02 identity and migration regression checks.
+for (const file of htmlFiles) {
+  const html = await readFile(file, 'utf8');
+  assert(!/Pectrium|pectrium/.test(html), 'Retired company identity: ' + file);
+}
+assert(homeMain.includes('Technology · Business · Software Engineer'));
+assert(homeMain.includes('software engineer and founder of Pectran'));
+assert(story.includes('founder of Pectran'));
+assert(press.includes('software engineer and founder of Pectran'));
+const redirects = JSON.parse(await readFile('vercel.json', 'utf8')).redirects;
+assert(redirects.some(r => r.source === '/work/pectrium' && r.destination === '/work/pectran' && r.permanent === true));
+console.log('Verified Build 02 founder identity, company migration and legacy redirect.');
