@@ -25,6 +25,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/work/pectrium",
+      "destination": "/work/pectran",
+      "permanent": true
+    },
+    {
       "source": "/work/jeclazon",
       "destination": "/work/pectran",
       "permanent": true
