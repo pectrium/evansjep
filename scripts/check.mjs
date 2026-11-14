@@ -24,15 +24,28 @@ const contact=await readFile('dist/contact.html','utf8');for(const url of ['mail
 const press=await readFile('dist/media.html','utf8');assert(!press.includes('download='));assert(press.includes('Extended biography'));
 console.log(`Verified ${htmlFiles.length} pages and ${links} internal asset/navigation links, fragments, content exclusions, contacts and metadata.`);
 
-const home=await readFile('dist/index.html','utf8');const homeMain=home.match(/<main[^>]*>([\s\S]*?)<\/main>/)[1];assert(homeMain.includes('Explore Pectrium'));assert(homeMain.includes('href="/ventures"'));for(const unwanted of ['Quincestone','Emperor Armani','Jeclazon','selected-work','writing-preview','intro-section'])assert(!homeMain.includes(unwanted),'Homepage content isolation: '+unwanted);
+const home=await readFile('dist/index.html','utf8');const homeMain=home.match(/<main[^>]*>([\s\S]*?)<\/main>/)[1];assert(homeMain.includes('Explore Pectran'));assert(homeMain.includes('href="/ventures"'));for(const unwanted of ['Quincestone','Emperor Armani','Jeclazon','selected-work','writing-preview','intro-section'])assert(!homeMain.includes(unwanted),'Homepage content isolation: '+unwanted);
 
-for(const file of htmlFiles){const html=await readFile(file,'utf8');const nav=html.split('<nav id="navigation"')[1].split("</nav>")[0];for(const label of ['Biography','Principles','Approach','Pectrium','Insights','Focus','Contact'])assert(nav.includes(label));assert(html.includes('class="site-footer compact-footer"'));assert(html.includes('aria-label="Social profiles"'));for(const name of ['Instagram','Facebook','TikTok','X'])assert(html.includes('aria-label="Evans Jep on '+name+'"'));for(const url of ['https://www.instagram.com/_u/realevansjep','https://www.facebook.com/share/14wNg8VV2N3/'])assert(html.includes(url));assert(!html.includes('footer-invitation'));assert(!html.split('<footer')[1].split('</footer>')[0].includes('Contact Evans'));}
+for(const file of htmlFiles){const html=await readFile(file,'utf8');const nav=html.split('<nav id="navigation"')[1].split("</nav>")[0];for(const label of ['Biography','Principles','Approach','Pectran','Insights','Focus','Contact'])assert(nav.includes(label));assert(html.includes('class="site-footer compact-footer"'));assert(html.includes('aria-label="Social profiles"'));for(const name of ['Instagram','Facebook','TikTok','X'])assert(html.includes('aria-label="Evans Jep on '+name+'"'));for(const url of ['https://www.instagram.com/_u/realevansjep','https://www.facebook.com/share/14wNg8VV2N3/'])assert(html.includes(url));assert(!html.includes('footer-invitation'));assert(!html.split('<footer')[1].split('</footer>')[0].includes('Contact Evans'));}
 
 const projectIndex=await readFile('dist/ventures.html','utf8');
-assert.deepEqual(projects.map(p=>p.slug),['pectrium']);
-assert(projectIndex.includes('/work/pectrium'));
-const company=await readFile('dist/work/pectrium.html','utf8');
-for(const term of ['Independent technology company','Technology built around real needs.','CEO of Pectrium','Discuss a project'])assert(company.includes(term));
+assert.deepEqual(projects.map(p=>p.slug),['pectran']);
+assert(projectIndex.includes('/work/pectran'));
+const company=await readFile('dist/work/pectran.html','utf8');
+for(const term of ['Independent technology company','Technology built around real needs.','founder of Pectran','Discuss a project'])assert(company.includes(term));
 for(const file of htmlFiles){const html=await readFile(file,'utf8');for(const retired of ['Jeclazon','jeclazon','Quincestone','quincestone','Emperor Armani','emperor-armani','EJEP Systems'])assert(!html.includes(retired),'Retired showcase leaked: '+file+' '+retired);}
 for(const file of all)assert(!/quincestone|emperor-armani|jeclazon/.test(file),'Retired public asset: '+file);
 assert(!company.includes('href="undefined"'));
+
+// Build 02 identity and migration regression checks.
+for (const file of htmlFiles) {
+  const html = await readFile(file, 'utf8');
+  assert(!/Pectrium|pectrium/.test(html), 'Retired company identity: ' + file);
+}
+assert(homeMain.includes('Technology · Business · Software Engineer'));
+assert(homeMain.includes('software engineer and founder of Pectran'));
+assert(story.includes('founder of Pectran'));
+assert(press.includes('software engineer and founder of Pectran'));
+const redirects = JSON.parse(await readFile('vercel.json', 'utf8')).redirects;
+assert(redirects.some(r => r.source === '/work/pectrium' && r.destination === '/work/pectran' && r.permanent === true));
+console.log('Verified Build 02 founder identity, company migration and legacy redirect.');

@@ -25,18 +25,23 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/work/pectrium",
+      "destination": "/work/pectran",
+      "permanent": true
+    },
+    {
       "source": "/work/jeclazon",
-      "destination": "/work/pectrium",
+      "destination": "/work/pectran",
       "permanent": true
     },
     {
       "source": "/work/quincestone",
-      "destination": "/work/pectrium",
+      "destination": "/work/pectran",
       "permanent": true
     },
     {
       "source": "/work/emperor-armani",
-      "destination": "/work/pectrium",
+      "destination": "/work/pectran",
       "permanent": true
     }
   ]
